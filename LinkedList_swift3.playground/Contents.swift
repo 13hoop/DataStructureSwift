@@ -33,7 +33,7 @@ extension Node: CustomStringConvertible {
 public final class LinkedList<T: Equatable> {
   public typealias NodeType = Node<T>
   
-  private var start: NodeType? {
+  var start: NodeType? {
     didSet {
       if end == nil {
         end = start
@@ -41,7 +41,7 @@ public final class LinkedList<T: Equatable> {
     }
   }
   
-  private var end: NodeType? {
+  var end: NodeType? {
     didSet {
       if start == nil {
         start = end
@@ -49,7 +49,7 @@ public final class LinkedList<T: Equatable> {
     }
   }
   
-  public private(set) var count: Int = 0
+  public var count: Int = 0
   
   public var isEmpty: Bool {
     get {
@@ -61,7 +61,7 @@ public final class LinkedList<T: Equatable> {
     
   }
   // init LinkedList with a sequece
-  public init<S: Sequence where S.Interator.Element == T>(_ elements: S) {
+  public init<S: Sequence>(_ elements: S) where S.Iterator.Element == T {
     for element in elements {
       append(value: element)
     }
@@ -77,12 +77,12 @@ extension LinkedList {
   
   /// iterate over all nodes in the list invoking a block 
   /// - complexity: O(n)
-  privat func iterate(block: (node: NodeType, index: Int) throws -> NodeType?) rethrows -> NodeType? {
+  private func iterate(block: (_ node: NodeType, _ index: Int) throws -> NodeType?) rethrows -> NodeType? {
     var node = start
     var index = 0
     
     while node != nil {
-      let result = try block(node: node!, index: index)
+      let result = try block(node!, index)
       if result != nil {
         return result
       }
@@ -103,6 +103,7 @@ extension LinkedList {
       }
       return nil
     }
+    return result!
   }
   /// node value at a given index
   /// - complexity: O(n)
@@ -139,7 +140,7 @@ extension LinkedList {
     }
     count -= 1
     assert(
-      (end != nil && start != nil && count >= 1) || (end == nil && start == nil & count == 0),
+      (end != nil && start != nil && count >= 1) || (end == nil && start == nil && count == 0),
       "⚠️ Internal invariant not upheld at the end of remove"
     )
   }
