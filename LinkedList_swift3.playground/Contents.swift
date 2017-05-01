@@ -189,10 +189,81 @@ public struct LinkedListIterator<T: Equatable>: IteratorProtocol {
   }
 }
 
+/*
+ copy-on-write
+ most data structures in swift are structs, use copy-on-wirte(COW) methord to reduce amount the copying operation. COW only make copying data before writes
+ */
+extension LinkedList {
+  func copy() -> LinkedList<T> {
+    let newList = LinkedList<T>()
+    
+    for element in self {
+      newList.append(value: element.value)
+    }
+    return newList
+  }
+}
+
+public struct LinkedListCOW<T: Equatable> {
+  public typealias NodeType = Node<T>
+  
+  var storage: LinkedList<T> // read-only linkedList
+  var mutableStorage: LinkedList<T> { //mutableStorage - make a copy linkedList for remove/append
+    mutating get {
+      if !isKnownUniquelyReferenced(&storage) {
+        storage = storage.copy()
+      }
+      return storage
+    }
+  }
+  
+  public init() {
+    storage = LinkedList()
+  }
+  public init<S: Sequence> (_ elements: S) where S.Iterator.Element == T {
+    storage = LinkedList(elements)
+  }
+  public var count: Int {
+    get {
+      return storage.count
+    }
+  }
+  public var isEmpty: Bool {
+    get {
+      return storage.isEmpty
+    }
+  }
+  public mutating func append(value: T) {
+    mutableStorage.append(value: value)
+  }
+  public func nodeAt(index: Int) -> NodeType {
+    return storage.nodeAt(index: index)
+  }
+  public func valueAt(index: Int) -> T {
+    let node = nodeAt(index: index)
+    return node.value
+  }
+  public mutating func remove(node: NodeType) {
+    mutableStorage.remove(node: node)
+  }
+  public mutating func remove(atIndex index: Int) {
+    mutableStorage.remove(atIndex: index)
+  }
+}
+
+extension LinkedListCOW: CustomStringConvertible {
+  public var description: String {
+    get {
+      let address = Unmanaged.passUnretained(storage).toOpaque()
+      return "LinkedListCOW( storage: \(address))"
+    }
+  }
+}
 
 /*
   TEST HERE
  */
+// basic
 var list = LinkedList<String>()
 list.append(value: "this")
 list.append(value: "is")
@@ -206,3 +277,20 @@ let values: [String] = list.map {
   $0.value
 }
 print(values)
+
+// COW test
+let list1 = LinkedListCOW([1, 2, 3, 4])
+var list2 = list1
+
+print(" List 1: \(list1), count: \(list1.count)")
+print(" List 1: \(list2), count: \(list2.count)")
+
+let first1 = list1.nodeAt(index: 0)
+let first2 = list2.nodeAt(index: 0)
+print("first 1 : \(first1)  -- first 2 : \(first2)")
+
+print(" -- modify lsit 2 here --")
+list2.append(value: 999)
+
+print(" List 1: \(list1), count: \(list1.count)")
+print(" List 1: \(list2), count: \(list2.count)")
