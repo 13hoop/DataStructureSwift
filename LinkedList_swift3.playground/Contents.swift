@@ -160,3 +160,49 @@ extension LinkedList {
   }
 }
 
+/*
+  Sequence protocol(SequenceType in swift2): make linkedList iteratored over using for...in and some default methords like forEach, map, filter... 
+  Need to implement `makeIterator` methord that returns an iterator conforming to the IteratorProcotol
+  LinkedList --> Sequence
+                    |--> IteratorProcotol: makeIterator
+ */
+extension LinkedList: Sequence {
+  public typealias Iterator = LinkedListIterator<T>
+  public func makeIterator() -> LinkedList.Iterator {
+    return LinkedListIterator(startNode: start)
+  }
+}
+
+public struct LinkedListIterator<T: Equatable>: IteratorProtocol {
+  public typealias Element = Node<T>
+  
+  private var currentNode: Element?
+  
+  init(startNode: Element?) {
+    currentNode = startNode
+  }
+  
+  public mutating func next() -> LinkedListIterator.Element? {
+    let node = currentNode
+    currentNode = currentNode?.next
+    return node
+  }
+}
+
+
+/*
+  TEST HERE
+ */
+var list = LinkedList<String>()
+list.append(value: "this")
+list.append(value: "is")
+list.append(value: "List")
+
+for node in list {
+  print("\(node)")
+}
+
+let values: [String] = list.map {
+  $0.value
+}
+print(values)
