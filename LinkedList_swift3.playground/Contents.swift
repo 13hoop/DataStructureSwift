@@ -210,6 +210,7 @@ public struct LinkedListCOW<T: Equatable> {
   var storage: LinkedList<T> // read-only linkedList
   var mutableStorage: LinkedList<T> { //mutableStorage - make a copy linkedList for remove/append
     mutating get {
+      if !isUniquelyReferencedNonObjC(&storage) {
       if !isKnownUniquelyReferenced(&storage) {
         storage = storage.copy()
       }
@@ -220,6 +221,8 @@ public struct LinkedListCOW<T: Equatable> {
   public init() {
     storage = LinkedList()
   }
+  
+  public init<S: Sequence where S.Iterator.Element == T>(_ elements: S) {
   public init<S: Sequence> (_ elements: S) where S.Iterator.Element == T {
     storage = LinkedList(elements)
   }
@@ -254,6 +257,7 @@ public struct LinkedListCOW<T: Equatable> {
 extension LinkedListCOW: CustomStringConvertible {
   public var description: String {
     get {
+      let address = unsafeAddree(of: storage)
       let address = Unmanaged.passUnretained(storage).toOpaque()
       return "LinkedListCOW( storage: \(address))"
     }
