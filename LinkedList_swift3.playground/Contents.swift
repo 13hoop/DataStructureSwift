@@ -261,9 +261,10 @@ extension LinkedListCOW: CustomStringConvertible {
   }
 }
 
-/*
-  TEST HERE
- */
+/***********************************************
+                    TEST HERE
+ ***********************************************/
+
 // basic
 var list = LinkedList<String>()
 list.append(value: "this")
@@ -295,3 +296,10 @@ list2.append(value: 999)
 
 print(" List 1: \(list1), count: \(list1.count)")
 print(" List 1: \(list2), count: \(list2.count)")
+
+
+
+
+
+
+
