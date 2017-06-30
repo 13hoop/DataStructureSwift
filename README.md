@@ -36,6 +36,7 @@ SWIFT3 实现的一个双向链表
 
 - [x] LinkedList Copy-on-write
 - [ ] TODO: Collection protocol
+
 ### SortPlayground
 
 - [x] insertSort
@@ -44,11 +45,10 @@ SWIFT3 实现的一个双向链表
 
 - [x] bubbleSort
 
-- [x] quickSort
+- [x] quickSort: 最原始的实现方式，没有使用swift高级函数，个人感觉比较好理解
 
-      ⚠️Warming：
-
-      Array in swift is a valued type， using `inout` make them refed, just like:
+    ⚠️Warming：
+Array in swift is a valued type， using `inout` make them refed, just like:
 
       ```swift
       let a = ["a", "b", "c"]
