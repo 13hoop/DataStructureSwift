@@ -131,3 +131,54 @@ print(r3)
 quickSort(arr: &a, start: 0, end: a.count-1)
 print(a)
 
+
+/// give a stide, and insert, and last insert
+/// using break and countinue reduce the for loop times， using x／y test
+func shellSort(arr: inout [Int]) {
+
+  var x = 0
+  var y = 0
+  var gap = arr.count / 2
+  while gap > 0 {
+    for i in 0 ..< arr.count {
+//      y += 1
+//      print("y :", y)
+      
+      if i + gap < arr.count {
+        
+        /// inserSort:  i and i+gap
+        if arr[i] > arr[i+gap] {
+//          print("    ", arr[i], " *** ", arr[i+gap])
+          let t = arr[i+gap]
+          arr[i+gap] = arr[i]
+          arr[i] = t
+        }
+        
+        /// this last insert sort
+        if gap == 1 && i > 0 {
+          if arr[i-1] > arr[i] {
+            let t = arr[i]
+            arr[i] = arr[i-1]
+            arr[i-1] = t
+          }
+        }else {
+          continue
+        }
+      }else {
+        break
+      }
+//      
+//      x += 1
+//      print(" x= ",  x)
+    }
+    
+    gap /= 2
+  }
+
+}
+
+var shellArr = [49, 38, 65, 97, 26, 13, 27, 49, 55, 4]
+shellSort(arr: &shellArr)
+print(shellArr)
+
+

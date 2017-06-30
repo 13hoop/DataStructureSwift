@@ -38,6 +38,7 @@ SWIFT3 实现的一个双向链表
 - [ ] TODO: Collection protocol
 
 ### SortPlayground
+管可能多的作过程输出，很方便的看到各个算法的具体运行过程，方便查看
 
 - [x] insertSort
 
@@ -58,4 +59,5 @@ Array in swift is a valued type， using `inout` make them refed, just like:
         changed( &a )
         print(a) // [a, bbb, c]
       ```
-
+- [x] shellSort: 也是最原始的思路 -- 划定间隔获取数据，各自insertSort在综合insertSort
+    使用break和continue来减少for-loop次数
