@@ -11,8 +11,6 @@ import Foundation
   associatedtype: Element
   mutating func next() -> Element?
  }
-
- 
  */
 
 struct Beer {
