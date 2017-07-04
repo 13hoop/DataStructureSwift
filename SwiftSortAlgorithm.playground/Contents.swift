@@ -228,32 +228,6 @@ func mergeOdered(arr: inout[Int], desArr: inout [Int], start: Int, middle: Int, 
 //  print("finally:  ", desArr)
 }
 
-//var test = [7,8, 1, 4, 5]
-//var dest = test
-//mergeOdered(arr: &test, desArr: &dest, start: 0, middle: 1, end: test.count-1)
-//
-
-//func arraySplit(arr: [Int], first: Int, last:Int) {
-//
-//  if last == first{
-//    print(arr[last])
-//  }
-//
-//  print(" - ")
-//  var arr = arr
-//  if first < last {
-//    
-//    let m = (first + last) / 2
-//    print(first, m , last)
-//    arraySplit(arr: arr, first: first, last: m)
-//    arraySplit(arr: arr, first: m+1, last: last)
-//    
-//    print("M : ", m, arr[0...m], arr[m...2])
-//  }
-//}
-//
-//let arraySp = [111, 222, 444]
-//arraySplit(arr: arraySp, first: 0, last: arraySp.count-1)
 /// 将按指定的gap为单位，让相邻的2组gap数据merge,如果余下不到gap保留，不到2gap就
 func mergeStide(arr: inout [Int], mergedArr: inout [Int], gap: Int) {
   
@@ -306,4 +280,3 @@ var mergeArr = [23, 7, 81, 5, 7, 14, 9, 55, 62, 74, 9] // 1 ->
 //var mergeArr = [5, 7, 23, 81, 7, 9, 14, 55, 9, 62, 74] // 4 ->
 //var mergeArr = [5, 7, 7, 9, 14, 23, 55, 81, 9, 62, 74] // 8 ->
 mergeSort(arr: &mergeArr)
-
