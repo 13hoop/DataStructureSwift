@@ -17,7 +17,7 @@ func sum(i: Int, j: Int, arr: [Int]) -> Int {
     for idx in i...j {
         r += arr[idx]
         
-        print("                ~ [\(i+idx) + \(j)]   =>  \(r)")
+        print("                ~ [\(i+idx) + \(idx)]   =>  \(r)")
 
     }
     return r
@@ -26,10 +26,12 @@ func sum(i: Int, j: Int, arr: [Int]) -> Int {
 let arr: [Int] = [-2, 11, -4, 13, -5, -2]
 var maxV = 0
 for i in 0..<arr.count {
+    var thisV = 0
     let start = arr[i]
     print("start [\(start)]")
     for j in i..<arr.count {
-        maxV = max(maxV, sum(i: i, j: j, arr: arr))
+        thisV += arr[j]
+        maxV = max(thisV, maxV)
         print("         - end [\(arr[j])]  => \(maxV)")
     }
 }
