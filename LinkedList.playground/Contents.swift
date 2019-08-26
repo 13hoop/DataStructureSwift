@@ -123,10 +123,53 @@ func checkoutCircle(head: ListNode?) -> Bool {
 }
 
 // MARK:  ---------------- 004. 检测是否有环，并返回入环节点，如果无环返回 nil
+func getMeetingPoint(head: ListNode?) -> ListNode? {
+    guard head != nil else {
+        return nil
+    }
+    var slow = head
+    var fast = slow!.next
+    
+    while slow != nil {
+        if fast == nil {
+            return nil
+        }
+        
+        if slow === fast {
+            return slow
+        }
+
+        slow = slow!.next
+        fast = fast!.next?.next
+    }
+    return nil
+}
+
 func checkoutCircleNode(head: ListNode?) -> ListNode? {
+
     
+    guard let meet = getMeetingPoint(head: head) else {
+        return nil
+    }
     
-    return nil;
+    var tortoise = head!
+    var hare = meet
+    
+    var i = 0
+    while true {
+//        if tortoise === hare {
+//            return tortoise
+//        }
+        print(" -> \(String(describing: tortoise.val))  ~ \(String(describing: hare.val))\n")
+        if i > 20 {
+            return nil
+        }
+        i += 1
+        
+
+        tortoise = tortoise.next!
+        hare = hare.next!
+    }
 }
 
 
@@ -136,6 +179,12 @@ func checkoutCircleNode(head: ListNode?) -> ListNode? {
 var linkList = creatALinklist()
 //printLinkList(head: linkList)
 
-checkoutCircle(head: linkList)
+//checkoutCircle(head: linkList)
+
+if let cirleP = checkoutCircleNode(head: linkList) {
+    print(" --> \(String(describing: cirleP.val))")
+}else {
+    print(" --> here no cirle ")
+}
 
 
