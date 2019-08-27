@@ -128,19 +128,19 @@ func getMeetingPoint(head: ListNode?) -> ListNode? {
         return nil
     }
     var slow = head
-    var fast = slow!.next
+    var fast = slow
     
-    while slow != nil {
-        if fast == nil {
-            return nil
-        }
+    while slow != nil && fast != nil {
         
+//        print(" -> \(String(describing: slow!.val))  ~ \(String(describing: fast!.val))\n")
+        
+        slow = slow!.next
+        fast = fast!.next?.next
+
         if slow === fast {
             return slow
         }
 
-        slow = slow!.next
-        fast = fast!.next?.next
     }
     return nil
 }
@@ -155,20 +155,14 @@ func checkoutCircleNode(head: ListNode?) -> ListNode? {
     var tortoise = head!
     var hare = meet
     
-    var i = 0
+//    var i = 0
     while true {
-//        if tortoise === hare {
-//            return tortoise
-//        }
         print(" -> \(String(describing: tortoise.val))  ~ \(String(describing: hare.val))\n")
-        if i > 20 {
-            return nil
-        }
-        i += 1
-        
-
         tortoise = tortoise.next!
         hare = hare.next!
+        if tortoise === hare {
+            return tortoise
+        }
     }
 }
 
@@ -181,10 +175,11 @@ var linkList = creatALinklist()
 
 //checkoutCircle(head: linkList)
 
+//var a = getMeetingPoint(head: linkList)
+//print(" Meeting P is \(String(describing: a?.val))")
+
 if let cirleP = checkoutCircleNode(head: linkList) {
-    print(" --> \(String(describing: cirleP.val))")
+    print(" circled at \(String(describing: cirleP.val))")
 }else {
     print(" --> here no cirle ")
 }
-
-
