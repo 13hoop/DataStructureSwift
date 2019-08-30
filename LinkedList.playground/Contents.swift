@@ -55,7 +55,7 @@ func creatALinklist() -> ListNode?{
     node4.next = node5
     node5.next = node6
     node6.next = node7
-    node7.next = node3
+    node7.next = nil
 
 //    let head = node3
 //    head.next = node2
@@ -147,7 +147,6 @@ func getMeetingPoint(head: ListNode?) -> ListNode? {
 
 func checkoutCircleNode(head: ListNode?) -> ListNode? {
 
-    
     guard let meet = getMeetingPoint(head: head) else {
         return nil
     }
@@ -167,19 +166,94 @@ func checkoutCircleNode(head: ListNode?) -> ListNode? {
 }
 
 
+
+// MARK:  ---------------- 005. 单交叉链表
+func getMeetNodeWhenCrossed(headA: ListNode?, headB: ListNode?) -> ListNode? {
+    
+    var nodeA = headA
+    var arr: [ListNode] = []
+    while nodeA != nil {
+        arr.append(nodeA!)
+        print("\(String(describing: nodeA!.val))")
+        nodeA = nodeA?.next
+    }
+    
+    var nodeB = headB
+    while nodeB != nil {
+        if arr.contains(where: { (value) -> Bool in
+//            print(" --- value > \(String(describing: value.val))  compare  \(String(describing: nodeB?.val))")
+
+            if value === nodeB {
+                return true
+            }else {
+                return false
+            }
+        }) {
+            print(" -vvvv- > \(String(describing: nodeB?.val))")
+            return nodeB
+        }
+        nodeB = nodeB?.next
+    }
+    
+    return nil
+}
+
+
+
+
 //---------------------------     ---------------------------|
 //                         test here                         |
 //---------------------------     ---------------------------|
-var linkList = creatALinklist()
+
+//var linkList = creatALinklist()                       // 001
 //printLinkList(head: linkList)
 
-//checkoutCircle(head: linkList)
+//checkoutCircle(head: linkList)                        // 002
 
-//var a = getMeetingPoint(head: linkList)
+//var a = getMeetingPoint(head: linkList)               // 003
 //print(" Meeting P is \(String(describing: a?.val))")
 
-if let cirleP = checkoutCircleNode(head: linkList) {
-    print(" circled at \(String(describing: cirleP.val))")
-}else {
-    print(" --> here no cirle ")
-}
+// 004
+//if let cirleP = checkoutCircleNode(head: linkList) {
+//    print(" circled at \(String(describing: cirleP.val))")
+//}else {
+//    print(" --> here no cirle ")
+//}
+
+
+
+// 005
+let nodeA0: ListNode = ListNode(value: -14)
+let nodeA1: ListNode = ListNode(value: -13)
+let nodeA2: ListNode = ListNode(value: -12)
+let nodeA3: ListNode = ListNode(value: -11)
+
+let node0: ListNode = ListNode(value: -3)
+let node1: ListNode = ListNode(value: -2)
+let node2: ListNode = ListNode(value: -1)
+let node3: ListNode = ListNode(value: 0)
+let node4: ListNode = ListNode(value: 1)
+let node5: ListNode = ListNode(value: 2)
+let node6: ListNode = ListNode(value: 3)
+let node7: ListNode = ListNode(value: 4)
+
+let head2 = node0
+head2.next = node1
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+node5.next = node6
+node6.next = node7
+node7.next = nil
+
+let head1 = nodeA0
+nodeA0.next = nodeA1
+nodeA1.next = nodeA2
+nodeA2.next = nodeA3
+nodeA3.next = node3
+
+let linkListA = head1
+let linkListB = head2
+let r = getMeetNodeWhenCrossed(headA: head1, headB: head2)
+
