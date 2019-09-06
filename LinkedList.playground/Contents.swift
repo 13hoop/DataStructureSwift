@@ -199,6 +199,42 @@ func getMeetNodeWhenCrossed(headA: ListNode?, headB: ListNode?) -> ListNode? {
 }
 
 
+// MARK:  ---------------- 006. 删除链表中指定的倒数第N个节点
+func removeNthFromEnd(head: ListNode?, idx: Int) -> ListNode? {
+    
+    var walk: ListNode? = head
+    var arr = [ListNode]()
+
+    var i = 0;
+    while walk != nil {
+        arr.append(walk!)
+        print("-[\(i)]-  walk:\(String(describing: walk?.val))")
+
+        walk = walk?.next;
+        i += 1
+    }
+    
+    
+    let x = arr[i-idx]
+    print("-x-  walk:\(String(describing: x.val))")
+    if(arr.count - idx >= 1) {
+        let preX = arr[i-idx-1]
+        preX.next = x.next
+        
+
+        return head
+    }else {
+        return x.next
+    }
+
+    return nil
+}
+
+
+
+
+
+
 
 
 //---------------------------     ---------------------------|
@@ -247,13 +283,15 @@ node5.next = node6
 node6.next = node7
 node7.next = nil
 
-let head1 = nodeA0
-nodeA0.next = nodeA1
-nodeA1.next = nodeA2
-nodeA2.next = nodeA3
-nodeA3.next = node3
+//let head1 = nodeA0
+//nodeA0.next = nodeA1
+//nodeA1.next = nodeA2
+//nodeA2.next = nodeA3
+//nodeA3.next = node3
+//
+//let linkListA = head1
+//let linkListB = head2
+//let r = getMeetNodeWhenCrossed(headA: head1, headB: head2)
 
-let linkListA = head1
-let linkListB = head2
-let r = getMeetNodeWhenCrossed(headA: head1, headB: head2)
 
+removeNthFromEnd(head: node0, idx: 8)
