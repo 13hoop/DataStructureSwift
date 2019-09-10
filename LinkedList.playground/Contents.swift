@@ -231,6 +231,11 @@ func removeNthFromEnd(head: ListNode?, idx: Int) -> ListNode? {
 }
 
 
+// MARK:  ---------------- 007. reverse
+func reverse(head: ListNode?) -> ListNode? {
+    
+    return nil;
+}
 
 
 
