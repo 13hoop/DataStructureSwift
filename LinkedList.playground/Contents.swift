@@ -234,15 +234,24 @@ func removeNthFromEnd(head: ListNode?, idx: Int) -> ListNode? {
 // MARK:  ---------------- 007. reverse
 func reverse(head: ListNode?) -> ListNode? {
     
-    var curr = head
-    var next = head?.next
-    while curr != nil {
-        let temp = next
-        next?.next = curr
+    func swap(x: ListNode?, y ListNode?) {
+        
     }
     
-    return nil;
+
+    var pre:ListNode? = nil
+    var walk = head
+    while walk != nil {
+        let temp = walk?.next
+        walk?.next = pre
+        pre = walk
+        walk = temp
+    }
+    
+    return pre
 }
+
+
 
 
 
