@@ -98,15 +98,16 @@ class BitTree {
         }
     }
     
+    
+    var x: Int = 0
     func height(node: BiTNode?) -> Int {
-        
+        x += 1
         if node == nil {
             return 0
         }else {
-            print(node!.value)
             let i = height(node: node!.letfChild)
             let j = height(node: node!.rightChild)
-            return (i<j) ? (j+1) : (i+1)
+            return i>j ? i+1 : j+1
         }
     }
     
@@ -121,13 +122,13 @@ class BitTree {
 let nba = BiTNode(value: "NBA")
 let west = BiTNode(value: "WestSec")
 let east = BiTNode(value: "EastSec")
-nba.letfChild = east
-nba.rightChild = west
+nba.letfChild = west
+nba.rightChild = east
 
 let lakers = BiTNode(value: "LAKERs")
-let spurs = BiTNode(value: "Spurs")
-west.letfChild = lakers
-west.rightChild = spurs
+//let spurs = BiTNode(value: "Spurs")
+west.rightChild = lakers
+//west.rightChild = spurs
 
 //let celtics = BiTNode(value: "CEltics")
 //let bull = BiTNode(value: "BULLs")

@@ -144,6 +144,7 @@ print(nba)
 
 ## Tree 002 -- 二叉树
 
-我们从典型而简单的二叉树(binary tree)进行探讨，当每个节点最多有2个孩子的树，我们称之为**二叉树(binary tree)**，分别称之为**左右孩子**(left/right child)，当节点没有孩子时，仍就称之为**叶子(leaf)** 正因为这个特点，从数学上我们能找到很多便利
+我们从典型而简单的二叉树(binary tree)进行探讨，当每个节点最多有2个孩子的树，我们称之为**二叉树(binary tree)**，分别称之为**左右孩子**(left/right child)，当节点没有孩子时，仍就称之为**叶子(leaf)**，这其中如果最后一层全部是叶子时就是`满二叉树`（节点数 = 2的层数次幂数 - 1），如果左zi shuzishu
 
+比如对于一个多项式`(5 * (a - 10)) + (-4 * (3 / b))`， 借助二叉树可存储为：
 ![多项式的二叉树表示](https://raw.githubusercontent.com/raywenderlich/swift-algorithm-club/master/Binary%20Tree/Images/Operations.png)
