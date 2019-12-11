@@ -144,31 +144,26 @@ class BitTree {
     open func postTraversal() {
         postOrder(root: self.root)
     }
-    // 迭代
+    // Iteration & stack
      func postOrder(root: BiTNode?) {
         var arr: [BiTNode] = []
         var curr = root
         
-        while curr != nil {
-            arr.append(curr!)
-            print("--> " + curr!.value)
-            if curr!.letfChild != nil {
-                arr.append(curr!.letfChild!)
-                print("   push ~ " + curr!.letfChild!.value)
+        while true {
+            if curr != nil {
+                print(" push--> " + curr!.value)
+                arr.append(curr!)
                 curr = curr!.letfChild
             }else {
-//                if arr.count == 1 {
-//                    print("    switch side   ")
-////                    curr = arr.first?.rightChild
-//                    arr.removeLast()
-//                    break
-//                }else {
-                    arr.removeLast()
-                    let popN = curr
-                    curr = popN!.rightChild
-                    print("   pop ~ " + popN!.value)
-//                }
+                if arr.count == 0 {
+                    break;
+                }
+                let last = arr.last
+//                print(" pop--> " + (last!.value))
+                arr.removeLast()
+                curr = last!.rightChild
             }
+            
         }
     }
 }
