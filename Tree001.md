@@ -144,7 +144,33 @@ print(nba)
 
 ## Tree 002 -- 二叉树
 
-我们从典型而简单的二叉树(binary tree)进行探讨，当每个节点最多有2个孩子的树，我们称之为**二叉树(binary tree)**，分别称之为**左右孩子**(left/right child)，当节点没有孩子时，仍就称之为**叶子(leaf)**，这其中如果最后一层全部是叶子时就是`满二叉树`（节点数 = 2的层数次幂数 - 1），如果左zi shuzishu
+我们从典型而简单的二叉树(binary tree)进行探讨，当每个节点最多有2个孩子的树，我们称之为**二叉树(binary tree)**，分别称之为**左右孩子**(left/right child)，当节点没有孩子时，仍就称之为**叶子(leaf)**，这其中如果最后一层全部是叶子时就是`满二叉树`（节点数 = 2的层数次幂数 - 1）
 
 比如对于一个多项式`(5 * (a - 10)) + (-4 * (3 / b))`， 借助二叉树可存储为：
 ![多项式的二叉树表示](https://raw.githubusercontent.com/raywenderlich/swift-algorithm-club/master/Binary%20Tree/Images/Operations.png)
+
+当我们使用`中序遍历(inorder Traversal)`时，就能还原上述多项式的计算逻辑，当然还有`前序遍历(preorder traversal)`和`后序遍历(postorder traversal)`其他遍历方式，可以看出前中后指的就是对任意子树中`根`处理的前中后，不同情况下根据逻辑选取不用的遍历方式
+
+### 遍历
+二叉树的遍历有`递归(Recursive)`和`迭代(Iterative)`2中方式，其中递归一旦理解了就很简单明了，但很反直觉，而迭代更容易理解一些，先说递归：
+```swift
+/**
+            A
+          /   \  
+        B      C
+         \    / \   
+          D  E   F
+*/
+
+// 前序 & 迭代
+private func preOder(root: BiTNode?) {
+    guard let curr = root else {
+        return
+    }
+    print(curr.value)
+    preOder(root: curr.letfChild)
+    preOder(root: curr.rightChild)
+}
+```
+其迭代流程如图![](https://wx3.sinaimg.cn/mw1024/006mou3Bgy1g9st0ezsohj31df0u0gsj.jpg)
+只画了左子树部分，右子树也是同样的，可以看到递归中最重要的是要明白一个递归单元在干什么以及何时退出

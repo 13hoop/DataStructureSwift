@@ -114,6 +114,63 @@ class BitTree {
     init(root: BiTNode?) {
         self.root = root
     }
+    
+    open func preTraversal() {
+        preOder(root: self.root)
+    }
+    
+    open func middleTraversal() {
+        middleOrder(root: root)
+    }
+    private func preOder(root: BiTNode?) {
+        guard let curr = root else {
+            return
+        }
+        print(curr.value)
+        preOder(root: curr.letfChild)
+        preOder(root: curr.rightChild)
+    }
+    
+    private func middleOrder(root: BiTNode?) {
+        guard let curr = root else {
+            return
+        }
+        middleOrder(root: curr.letfChild)
+        print(curr.value)
+        middleOrder(root: curr.rightChild)
+    }
+    
+    
+    open func postTraversal() {
+        postOrder(root: self.root)
+    }
+    // 迭代
+     func postOrder(root: BiTNode?) {
+        var arr: [BiTNode] = []
+        var curr = root
+        
+        while curr != nil {
+            arr.append(curr!)
+            print("--> " + curr!.value)
+            if curr!.letfChild != nil {
+                arr.append(curr!.letfChild!)
+                print("   push ~ " + curr!.letfChild!.value)
+                curr = curr!.letfChild
+            }else {
+//                if arr.count == 1 {
+//                    print("    switch side   ")
+////                    curr = arr.first?.rightChild
+//                    arr.removeLast()
+//                    break
+//                }else {
+                    arr.removeLast()
+                    let popN = curr
+                    curr = popN!.rightChild
+                    print("   pop ~ " + popN!.value)
+//                }
+            }
+        }
+    }
 }
 
 
@@ -138,8 +195,10 @@ west.rightChild = lakers
 let tree = BitTree(root: nba)
 print(tree)
 
-tree.height(node: tree.root)
-
+//tree.preTraversal()
+print(" --- --- ---")
+//tree.middleTraversal()
+tree.postTraversal()
 
 
 
