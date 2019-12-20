@@ -116,12 +116,18 @@ class BitTree {
     }
     
     open func preTraversal() {
-        preOder(root: self.root)
+        print(" ---- pre Traversal Recursive ---")
+        preOder(root: root)
     }
     
-    open func middleTraversal() {
-        middleOrder(root: root)
+    open func inTraversal() {
+        postOrder(root: root)
     }
+    
+    open func postTraversal() {
+        postOrder(root: root)
+    }
+
     private func preOder(root: BiTNode?) {
         guard let curr = root else {
             return
@@ -131,24 +137,29 @@ class BitTree {
         preOder(root: curr.rightChild)
     }
     
-    private func middleOrder(root: BiTNode?) {
+    private func inOrder(root: BiTNode?) {
         guard let curr = root else {
             return
         }
-        middleOrder(root: curr.letfChild)
+        inOrder(root: curr.letfChild)
         print(curr.value)
-        middleOrder(root: curr.rightChild)
+        inOrder(root: curr.rightChild)
     }
     
-    
-    open func postTraversal() {
-        postOrder(root: self.root)
+    private func postOrder(root: BiTNode?) {
+        guard let curr = root else {
+            return
+        }
+        postOrder(root: curr.letfChild)
+        postOrder(root: curr.rightChild)
+        print(curr.value)
     }
+    
     // Iteration & stack
-     func postOrder(root: BiTNode?) {
+    func preOrderIteration() {
         var arr: [BiTNode] = []
         var curr = root
-        
+        print(" ---- pre Traversal Iteration ---")
         while true {
             if curr != nil {
                 print(" push--> " + curr!.value)
@@ -163,14 +174,63 @@ class BitTree {
                 arr.removeLast()
                 curr = last!.rightChild
             }
-            
         }
     }
+    
+    func inOrderIteration() {
+        var arr:[BiTNode] = []
+        var curr = root
+        print(" ---- in Traversal Iteration ---")
+        while true {
+            if curr != nil {
+                arr.append(curr!)
+                curr = curr?.letfChild
+            }else {
+                if arr.count == 0 {
+                    break;
+                }
+                
+                var last = arr.last!
+                print("--> pop \(last.value)")
+                arr.removeLast()
+                curr = last.rightChild
+            }
+        }
+    }
+    
+    func postOrderIteration() {
+        var arr:[BiTNode] = []
+        var curr = root
+        print(" ---- post Traversal Iteration ---")
+        while true {
+            if curr != nil {
+                arr.append(curr!)
+//                print("--> push \(curr?.value)")
+                curr = curr?.letfChild
+
+            }else {
+                if arr.count == 0 {
+                    break;
+                }
+                
+                var last = arr.last!
+                arr.removeLast()
+                curr = last.rightChild
+
+            }
+        }
+    }   
 }
 
 
 // ----- test
-
+/*
+          NBA
+        /     \
+  WestSec     EastSec
+       \       /      \
+      LAKER  CELtics    BULLs
+ */
 let nba = BiTNode(value: "NBA")
 let west = BiTNode(value: "WestSec")
 let east = BiTNode(value: "EastSec")
@@ -179,23 +239,24 @@ nba.rightChild = east
 
 let lakers = BiTNode(value: "LAKERs")
 //let spurs = BiTNode(value: "Spurs")
-west.rightChild = lakers
 //west.rightChild = spurs
+west.rightChild = lakers
 
-//let celtics = BiTNode(value: "CEltics")
-//let bull = BiTNode(value: "BULLs")
-//east.letfChild = celtics
-//east.rightChild = bull
+let celtics = BiTNode(value: "CEltics")
+let bull = BiTNode(value: "BULLs")
+east.letfChild = celtics
+east.rightChild = bull
 
 let tree = BitTree(root: nba)
 print(tree)
 
-//tree.preTraversal()
+tree.preTraversal()
+tree.preOrderIteration()
+//tree.inTraversal()
 print(" --- --- ---")
-//tree.middleTraversal()
-tree.postTraversal()
-
-
+//tree.postTraversal()
+//tree.inOrderIteration()
+tree.postOrderIteration()
 
 
 

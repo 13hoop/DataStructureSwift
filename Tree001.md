@@ -162,7 +162,7 @@ print(nba)
           D  E   F
 */
 
-// 前序 & 迭代
+// 前序 & 递归
 private func preOder(root: BiTNode?) {
     guard let curr = root else {
         return
@@ -171,6 +171,29 @@ private func preOder(root: BiTNode?) {
     preOder(root: curr.letfChild)
     preOder(root: curr.rightChild)
 }
+
+// 前序 & 迭代 + stack
+private func preOrder(root: BiTNode?) {
+    var arr: [BiTNode] = []
+    var curr = root
+    
+    while true {
+        if curr != nil {
+            print(" push--> " + curr!.value)
+            arr.append(curr!)
+            curr = curr!.letfChild
+        }else {
+            if arr.count == 0 {
+                break;
+            }
+            let last = arr.last
+            print(" pop--> " + (last!.value))
+            arr.removeLast()
+            curr = last!.rightChild
+        }
+        
+    }
+}
 ```
-其迭代流程如图![](https://wx3.sinaimg.cn/mw1024/006mou3Bgy1g9st0ezsohj31df0u0gsj.jpg)
-只画了左子树部分，右子树也是同样的，可以看到递归中最重要的是要明白一个递归单元在干什么以及何时退出
+其递归流程如图![](https://wx3.sinaimg.cn/mw1024/006mou3Bgy1g9st0ezsohj31df0u0gsj.jpg)
+只画了左子树部分，右子树也是同样的，可以看到递归中最重要的是要明白`一个递归单元在干什么以及何时退出`。而递归的核心问题在于2点：`使用的数据结构` 以及 `如何从左子树切换到右子树`，这里使用了栈
