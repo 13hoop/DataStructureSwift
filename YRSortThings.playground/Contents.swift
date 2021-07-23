@@ -81,11 +81,41 @@ struct Selection<T: Comparable> {
     private static func exChange(arr: inout [T], x: Int, y: Int) {
         var temp: T
         temp = arr[x]
-//        print("  \(temp) <-> \(arr[y])")
+        print("  \(temp) <-> \(arr[y])")
         arr[x] = arr[y]
         arr[y] = temp
     }
 }
 
+
+struct InsertSort<T: Comparable> {
+    static func sort(arr: inout [T]) {
+        for i in 1..<arr.count {
+            for j in (0..<i).reversed() {
+//                print("\(i) -> \(j)")
+                if greater(arr: &arr, bElm: j, sElm: j+1) {
+                    exChange(arr: &arr, x: j, y: j+1)
+                }else {
+                    break;
+                }
+            }
+//            print(arr)
+        }
+    }
+    
+    private static func greater(arr: inout [T], bElm: Int, sElm: Int) -> Bool {
+        return arr[bElm] > arr[sElm]
+    }
+    private static func exChange(arr: inout [T], x: Int, y: Int) {
+        var temp: T
+        temp = arr[x]
+        arr[x] = arr[y]
+        arr[y] = temp
+    }
+}
+
+
 var arr = [4, 5, 6, 3, 2, 1]
-Selection.sort(arr: &arr)
+//Bubble.sort(arr: &arr)
+//Selection.sort(arr: &arr)
+//InsertSort.sort(arr: &arr)

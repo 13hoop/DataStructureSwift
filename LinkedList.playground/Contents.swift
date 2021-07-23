@@ -36,7 +36,7 @@ class YRList {
 }
 
 // MARK: ---------------- 001. 创建list
-func creatALinklist() -> ListNode?{
+func creatALinklist() -> ListNode? {
     
     let node0: ListNode = ListNode(value: -3)
     let node1: ListNode = ListNode(value: -2)
@@ -166,7 +166,6 @@ func checkoutCircleNode(head: ListNode?) -> ListNode? {
 }
 
 
-
 // MARK:  ---------------- 005. 单交叉链表
 func getMeetNodeWhenCrossed(headA: ListNode?, headB: ListNode?) -> ListNode? {
     
@@ -232,32 +231,24 @@ func removeNthFromEnd(head: ListNode?, idx: Int) -> ListNode? {
 
 
 // MARK:  ---------------- 007. reverse
-func reverse(head: ListNode?) -> ListNode? {
-    
-    func swap(x: ListNode?, y ListNode?) {
-        
-    }
-    
-
-    var pre:ListNode? = nil
-    var walk = head
-    while walk != nil {
-        let temp = walk?.next
-        walk?.next = pre
-        pre = walk
-        walk = temp
-    }
-    
-    return pre
-}
-
-
-
-
-
-
-
-
+//func reverse(head: ListNode?) -> ListNode? {
+//
+//    func swap(x: ListNode?, y ListNode?) {
+//
+//    }
+//
+//
+//    var pre:ListNode? = nil
+//    var walk = head
+//    while walk != nil {
+//        let temp = walk?.next
+//        walk?.next = pre
+//        pre = walk
+//        walk = temp
+//    }
+//
+//    return pre
+//}
 //---------------------------     ---------------------------|
 //                         test here                         |
 //---------------------------     ---------------------------|
@@ -280,39 +271,198 @@ func reverse(head: ListNode?) -> ListNode? {
 
 
 // 005
-let nodeA0: ListNode = ListNode(value: -14)
-let nodeA1: ListNode = ListNode(value: -13)
-let nodeA2: ListNode = ListNode(value: -12)
-let nodeA3: ListNode = ListNode(value: -11)
-
-let node0: ListNode = ListNode(value: -3)
-let node1: ListNode = ListNode(value: -2)
-let node2: ListNode = ListNode(value: -1)
-let node3: ListNode = ListNode(value: 0)
-let node4: ListNode = ListNode(value: 1)
-let node5: ListNode = ListNode(value: 2)
-let node6: ListNode = ListNode(value: 3)
-let node7: ListNode = ListNode(value: 4)
-
-let head2 = node0
-head2.next = node1
-node1.next = node2
-node2.next = node3
-node3.next = node4
-node4.next = node5
-node5.next = node6
-node6.next = node7
-node7.next = nil
-
-//let head1 = nodeA0
-//nodeA0.next = nodeA1
-//nodeA1.next = nodeA2
-//nodeA2.next = nodeA3
-//nodeA3.next = node3
+//let nodeA0: ListNode = ListNode(value: -14)
+//let nodeA1: ListNode = ListNode(value: -13)
+//let nodeA2: ListNode = ListNode(value: -12)
+//let nodeA3: ListNode = ListNode(value: -11)
 //
-//let linkListA = head1
-//let linkListB = head2
-//let r = getMeetNodeWhenCrossed(headA: head1, headB: head2)
+//let node0: ListNode = ListNode(value: -3)
+//let node1: ListNode = ListNode(value: -2)
+//let node2: ListNode = ListNode(value: -1)
+//let node3: ListNode = ListNode(value: 0)
+//let node4: ListNode = ListNode(value: 1)
+//let node5: ListNode = ListNode(value: 2)
+//let node6: ListNode = ListNode(value: 3)
+//let node7: ListNode = ListNode(value: 4)
+//
+//let head2 = node0
+//head2.next = node1
+//node1.next = node2
+//node2.next = node3
+//node3.next = node4
+//node4.next = node5
+//node5.next = node6
+//node6.next = node7
+//node7.next = nil
+//
+////let head1 = nodeA0
+////nodeA0.next = nodeA1
+////nodeA1.next = nodeA2
+////nodeA2.next = nodeA3
+////nodeA3.next = node3
+////
+////let linkListA = head1
+////let linkListB = head2
+////let r = getMeetNodeWhenCrossed(headA: head1, headB: head2)
+//
+//
+//removeNthFromEnd(head: node0, idx: 8)
 
 
-removeNthFromEnd(head: node0, idx: 8)
+// -------------- -------- new version ------- -------------
+
+class MyLinkedList {
+
+    class Node {
+        var val: Int
+        var nextN: Node?
+        var preN: Node?
+        init(value: Int) {
+            self.val = value
+        }
+    }
+    
+    open var count: Int = 0
+    open var headN: Node?
+    open var tailN: Node?
+
+    init() {
+        headN = nil
+        tailN = nil
+    }
+    
+    func get(_ index: Int) -> Int {
+        let curr = getNode(index)
+        return (curr != nil) ? curr!.val : -1
+    }
+    func getNode(_ index: Int) -> Node? {
+        guard index < count else {
+            return nil
+        }
+
+        var s = 0
+        var currN = headN
+        while currN != nil {
+            if index == s {
+                break
+            }
+
+            currN = currN?.nextN
+            s += 1
+        }
+        return currN
+    }
+    
+    func addAtHead(_ val: Int) {
+        let node = Node(value: val)
+        count += 1
+        guard count != 0 else {
+            headN = node
+            tailN = node
+            return
+        }
+        
+        node.nextN = headN
+        headN = node
+    }
+    
+    func addAtTail(_ val: Int) {
+        let node = Node(value: val)
+        guard count != 0 else {
+            headN = node
+            tailN = node
+            count += 1
+            return
+        }
+
+        var curr = headN
+        while curr != nil {
+            if curr?.nextN == nil {
+                tailN = curr
+                break
+            }
+            curr = curr!.nextN
+        }
+
+        tailN!.nextN = node
+    }
+    
+    func addAtIndex(_ index: Int, _ val: Int) {
+        let node = Node(value: val)
+        guard index <= count else {
+            print("\(index) index out of NodeList Range in 0..<\(count)")
+            return
+        }
+        
+        if index == count-1 {
+            addAtTail(val)
+        }else if index == 0 {
+            addAtHead(val)
+        }else {
+            let temp = getNode(index-1)
+            node.nextN = temp?.nextN
+            temp?.nextN = node
+            count += 1
+        }
+    }
+    
+    func deleteAtIndex(_ index: Int) {
+        guard index < count else {
+            print("\(index) index out of NodeList Range in 0..<\(count)")
+            return
+        }
+        
+        if index == 0 {
+            headN = headN?.nextN
+        }else {
+            let temp = getNode(index)
+            let preN = getNode(index-1)
+            preN?.nextN = temp?.nextN
+            temp?.nextN = nil
+        }
+    }
+    
+    func printList() {
+        var str = "Node list:"
+        var curr = headN
+        while curr != nil {
+            str += " -> (\(curr!.val))"
+            curr = curr?.nextN
+        }
+        print(str)
+    }
+}
+
+func testN001() {
+    let myLinkedList: MyLinkedList = MyLinkedList()
+    myLinkedList.addAtHead(1)
+    myLinkedList.addAtTail(3)
+    myLinkedList.addAtIndex(1, 2)
+    myLinkedList.get(1)
+    myLinkedList.printList()
+
+    myLinkedList.deleteAtIndex(1)
+    myLinkedList.get(1)
+    myLinkedList.printList()
+}
+//testN001()
+
+func testN002() {
+    let myLinkedList: MyLinkedList = MyLinkedList()
+    myLinkedList.addAtHead(7)
+    myLinkedList.addAtTail(7)
+    myLinkedList.addAtHead(9)
+    myLinkedList.addAtTail(8)
+    myLinkedList.addAtHead(6)
+    myLinkedList.addAtHead(0)
+    myLinkedList.get(5)
+    myLinkedList.printList()
+
+
+//    myLinkedList.addAtHead(0)
+//    myLinkedList.get(2)
+//    myLinkedList.get(5)
+//    myLinkedList.addAtTail(4)
+//    myLinkedList.printList()
+}
+testN002()
